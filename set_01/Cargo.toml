@@ -1,0 +1,20 @@
+[package]
+name = "set_01"
+version = "0.1.0"
+edition = "2024"
+default-run = "run_set_01"
+
+[dependencies]
+cryptopals = { path = "../../cryptopals" }
+
+[[bin]]
+name = "run_set_01"
+path = "run_set_01.rs"
+
+[[bin]]
+name = "cryptopals_01"
+path = "cryptopals_01.rs"
+
+[[bin]]
+name = "cryptopals_02"
+path = "cryptopals_02.rs"

@@ -1,0 +1,27 @@
+[package]
+name = "cryptopals"
+version = "0.1.0"
+edition = "2024"
+default-run = "run_set_01"
+
+[dependencies]
+hex = "0.4"
+base64 = "0.22.1"
+
+[workspace]
+members = [
+    "set_01",
+]
+
+
+[[bin]]
+name = "run_set_01"
+path = "set_01/run_set_01.rs"
+
+[[bin]]
+name = "cryptopals_01"
+path = "set_01/cryptopals_01.rs"
+
+[[bin]]
+name = "cryptopals_02"
+path = "set_01/cryptopals_02.rs"

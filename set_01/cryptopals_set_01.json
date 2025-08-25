@@ -1,0 +1,11 @@
+{
+    "challenge_id": "Cryptopals_set_01",
+    "text_input": "inputs/challenge_{problem_no:02d}_input",
+    "problem_title": "Challenge",
+    "challenge_folder": "set_01",
+    "problem_folder": "",
+    "solution_file": "cryptopals_{problem_no:02d}.{lang}",
+    "challenge_header": "Cryptopals: Set 1(Basic Algebra)",
+    "plot_color": "#18BC9C",
+    "script_header": "Cryptopals - Set 1, Challenge {problem_no}\nSolution Started: {month} {current_time.tm_mday}, {current_time.tm_year}\nPuzzle Link: https://cryptopals.com/sets/1/challenges/{problem_no}\nSolution by: {author}\nBrief: [Code/Problem Description]"
+}
