@@ -1,0 +1,3 @@
+[submodule "challenge_utils"]
+	path = challenge_utils
+	url = https://github.com/abbasmoosajee07/challenge_utils.git
