@@ -13,11 +13,10 @@ fn main() -> io::Result<()> {
     println!("Set 01, Challenge 02: Fixed XOR");
     let default_input: &'static str = "1c0111001f010100061a024b53535009181c^686974207468652062756c6c277320657965";
 
-    // Get the first command-line argument, or default to "Lang06_input.txt"
+    // Get the first command-line argument
     let args: Vec<String> = env::args().collect();
     let parsed_args: Option<&str> = args.get(1).map(|s: &String| s.as_str());
 
-    // let contents: String  = fs::read_to_string(file_path)?;
     let use_input: String = select_input(parsed_args, default_input);
 
     // Split into the two hex strings
