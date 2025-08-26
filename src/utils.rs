@@ -3,6 +3,11 @@ use std::path::PathBuf;
 use std::env;
 use std::fs;
 
+/// Convert string to a list of bytes
+pub fn string_to_bytes(s: String) -> Vec<u8> {
+    s.into_bytes()
+}
+
 /// Select input between `txt_file`, `input_arg` and `default`, and converts it to string
 pub fn select_input(input_arg: Option<&str>, default: &str) -> String {
     let hex_string = match input_arg {

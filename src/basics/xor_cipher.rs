@@ -1,4 +1,4 @@
-use crate::basics::fixed_xor::xor_bytes;
+use crate::basics::xor_bytes::xor_bytes_fixed;
 use std::collections::HashMap;
 
 /// XOR a byte slice with a single-character key (repeated).
@@ -12,7 +12,7 @@ pub fn test_xor_key(bytes_data: &[u8], key_str: &str) -> String {
         .collect();
 
     // Use xor_bytes
-    let xor_out = xor_bytes(bytes_data, &key_stream);
+    let xor_out = xor_bytes_fixed(bytes_data, &key_stream);
 
     // Convert back to lossy UTF-8 string (like Python `chr`)
     let test_cipher = String::from_utf8_lossy(&xor_out).to_string();

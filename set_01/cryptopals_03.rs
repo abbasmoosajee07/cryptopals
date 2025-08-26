@@ -7,7 +7,7 @@ Brief: [Single-byte XOR Cipher] */
 use std::{env, io};
 use std::collections::HashMap;
 use cryptopals::{select_input, hex_to_bytes, ALL_CHARS, test_xor_key, chi_square};
-// See the relevant functions in: cryptopals\src\basics\fixed_xor.rs
+// See the relevant functions in: cryptopals\src\basics\xor_cipher.rs
 
 fn main() -> io::Result<()> {
 

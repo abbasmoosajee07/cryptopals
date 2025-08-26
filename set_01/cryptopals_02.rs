@@ -5,8 +5,8 @@ Solution by: Abbas Moosajee
 Brief: [Fixed XOR] */
 
 use std::{env, io};
-use cryptopals::{select_input, hex_to_bytes, bytes_to_hex, xor_bytes};
-// See the relevant functions in: cryptopals\src\basics\fixed_xor.rs
+use cryptopals::{select_input, hex_to_bytes, bytes_to_hex, xor_bytes_fixed};
+// See the relevant functions in: cryptopals\src\basics\xor_bytes.rs
 
 fn main() -> io::Result<()> {
 
@@ -29,7 +29,7 @@ fn main() -> io::Result<()> {
     let hex_2: Vec<u8> = hex_to_bytes(inp_2);
 
     // XOR
-    let xor_out: Vec<u8> = xor_bytes(&hex_1, &hex_2);
+    let xor_out: Vec<u8> = xor_bytes_fixed(&hex_1, &hex_2);
 
     // Print results
     println!("XOR Input: {} ^ {}", inp_1, inp_2);
