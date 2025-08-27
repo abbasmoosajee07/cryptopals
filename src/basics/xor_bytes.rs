@@ -17,19 +17,3 @@ pub fn xor_bytes_repeating(byte_list: &[u8], comp_bytes: &[u8]) -> Vec<u8> {
 
     result
 }
-
-/// Converts a byte slice to a lowercase hexadecimal string.
-pub fn bytes_to_hex(bytes: &[u8]) -> String {
-    const HEX_DIGITS: &[u8; 16] = b"0123456789abcdef";
-
-    let mut hex_string = String::with_capacity(bytes.len() * 2);
-
-    for &byte in bytes {
-        let hi = (byte >> 4) as usize;
-        let lo = (byte & 0x0F) as usize;
-        hex_string.push(HEX_DIGITS[hi] as char);
-        hex_string.push(HEX_DIGITS[lo] as char);
-    }
-
-    hex_string
-}

@@ -4,49 +4,6 @@ use std::collections::HashMap;
 use crate::{ALL_CHARS};
 use crate::basics::xor_cipher::{test_xor_key, chi_square};
 
-/// Decode a Base64 string into a Vec<u8>
-/// Returns an error if the input is not valid Base64
-pub fn base64_to_bytes(line: &str) -> Result<Vec<u8>, String> {
-    // Base64 character set
-    const BASE64_TABLE: &[u8; 64] =
-        b"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
-
-    let mut result = Vec::new();
-    let mut buffer = 0u32;
-    let mut bits_collected = 0;
-
-    for c in line.chars() {
-        if c == '=' {
-            break; // padding reached
-        }
-
-        // Find value in base64 table
-        let value = match BASE64_TABLE.iter().position(|&x| x == c as u8) {
-            Some(v) => v as u32,
-            None => return Err(format!("Invalid base64 character '{}'", c)),
-        };
-
-        buffer = (buffer << 6) | value;
-        bits_collected += 6;
-
-        if bits_collected >= 8 {
-            bits_collected -= 8;
-            let byte = (buffer >> bits_collected) as u8 & 0xFF;
-            result.push(byte);
-        }
-    }
-
-    Ok(result)
-}
-
-/// Convert bytes to bits
-pub fn bytes_to_bits(input: &[u8]) -> Vec<String> {
-    input
-        .iter()
-        .map(|byte| format!("{:08b}", byte)) // each u8 → "01110100"
-        .collect()
-}
-
 /// Compute Hamming (edit) distance between two byte slices
 pub fn edit_distance(bytes_1: Vec<u8>, bytes_2: Vec<u8>) -> u32 {
     assert_eq!(bytes_1.len(), bytes_2.len(), "Inputs must be the same length");

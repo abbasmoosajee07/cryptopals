@@ -5,7 +5,7 @@ Solution by: Abbas Moosajee
 Brief: [Convert Hex to Base64] */
 
 use std::{env, io};
-use cryptopals::{select_input, hex_to_base64, hex_to_bytes, bytes_to_base64};
+use cryptopals::{select_input, hex_to_base64_lib_func, hex_to_bytes, bytes_to_base64};
 // See the relevant functions in: cryptopals\src\basics\hex_base64.rs
 
 fn main() -> io::Result<()> {
@@ -22,7 +22,7 @@ fn main() -> io::Result<()> {
 
     let raw_bytes: Vec<u8> = hex_to_bytes(&hex_string);
     let manual_b64: String = bytes_to_base64(&raw_bytes);
-    let lib_b64: String = hex_to_base64(&hex_string);
+    let lib_b64: String = hex_to_base64_lib_func(&hex_string);
 
     println!("   Bytes(Text): b'{:?}'", String::from_utf8_lossy(&raw_bytes));
     println!("     Hex Input: {}", hex_string);

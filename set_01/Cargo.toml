@@ -34,3 +34,7 @@ path = "cryptopals_05.rs"
 [[bin]]
 name = "cryptopals_06"
 path = "cryptopals_06.rs"
+
+[[bin]]
+name = "cryptopals_07"
+path = "cryptopals_07.rs"
