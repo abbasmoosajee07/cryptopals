@@ -7,12 +7,12 @@ default-run = "run_set_01"
 [dependencies]
 hex = "0.4"
 base64 = "0.22.1"
+itertools = "0.14"
 
 [workspace]
 members = [
     "set_01",
 ]
-
 
 [[bin]]
 name = "run_set_01"
@@ -37,3 +37,7 @@ path = "set_01/cryptopals_04.rs"
 [[bin]]
 name = "cryptopals_05"
 path = "set_01/cryptopals_05.rs"
+
+[[bin]]
+name = "cryptopals_06"
+path = "set_01/cryptopals_06.rs"

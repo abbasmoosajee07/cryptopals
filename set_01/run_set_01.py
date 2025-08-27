@@ -21,8 +21,8 @@ if __name__ == "__main__":
 
     results = analyzer.analyze(
         problems_to_run= PROBLEMS_TO_RUN,  # Problems 1-25
-        iterations=3,
-        save_results=True,
+        iterations=1,
+        save_results=False,
         custom_dir= selected_dir / "analysis"
     )
 
