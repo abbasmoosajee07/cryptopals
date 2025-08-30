@@ -4,13 +4,12 @@ Puzzle Link: https://cryptopals.com/sets/1/challenges/6
 Solution by: Abbas Moosajee
 Brief: [Break repeating-key XOR] */
 
-use std::env;
-use std::fs::File;
+
 use std::collections::HashMap;
-use std::io::{self, BufRead, BufReader};
+use std::{env, fs::File, error::Error, io::{BufRead, BufReader}};
 use cryptopals::{base64_to_bytes, compute_keysize, decipher_xor_key};
 
-fn main() -> io::Result<()> {
+fn main() -> Result<(), Box<dyn Error>> {
     println!("Set 01, Challenge 06: Break repeating-key XOR");
 
     let args: Vec<String> = env::args().collect();
@@ -20,7 +19,6 @@ fn main() -> io::Result<()> {
         "inputs/challenge_06_input.txt"
     };
 
-    println!("Reading file: {}", file_path);
 
     let file: File = File::open(file_path)?;
     let reader: BufReader<File> = BufReader::new(file);

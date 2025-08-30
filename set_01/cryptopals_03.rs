@@ -4,13 +4,12 @@ Puzzle Link: https://cryptopals.com/sets/1/challenges/3
 Solution by: Abbas Moosajee
 Brief: [Single-byte XOR Cipher] */
 
-use std::{env, io};
+use std::{env, error::Error};
 use std::collections::HashMap;
 use cryptopals::{select_input, hex_to_bytes, ALL_CHARS, test_xor_key, chi_square};
 // See the relevant functions in: cryptopals\src\basics\xor_cipher.rs
 
-fn main() -> io::Result<()> {
-
+fn main() -> Result<(), Box<dyn Error>> {
     println!("Set 01, Challenge 03: Single-byte XOR cipher");
     let default_input: &'static str = "1b37373331363f78151b7f2b783431333d78397828372d363c78373e783a393b3736";
 
@@ -18,7 +17,7 @@ fn main() -> io::Result<()> {
     let parsed_args: Option<&str> = args.get(1).map(|s: &String| s.as_str());
 
     let hex_input: String = select_input(parsed_args, default_input);
-    let raw_bytes: Vec<u8> = hex_to_bytes(&hex_input);
+    let raw_bytes: Vec<u8> = hex_to_bytes(&hex_input)?;
 
     println!("Hex Input:\\n{}", hex_input);
     let mut cipher_dict: HashMap<String, String> = HashMap::new();

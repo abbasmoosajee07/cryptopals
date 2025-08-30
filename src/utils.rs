@@ -3,10 +3,8 @@ use std::path::PathBuf;
 use std::env;
 use std::fs;
 
-/// Convert string to a list of bytes
-pub fn string_to_bytes(s: String) -> Vec<u8> {
-    s.into_bytes()
-}
+use std::fs::File;
+use std::error::Error;
 
 /// Select input between `txt_file`, `input_arg` and `default`, and converts it to string
 pub fn select_input(input_arg: Option<&str>, default: &str) -> String {
@@ -33,6 +31,11 @@ pub fn select_input(input_arg: Option<&str>, default: &str) -> String {
     }
 }
 
+
+pub fn read_file(file_path: &str) -> Result<File, Box<dyn Error>> {
+    let file = File::open(file_path)?; // ✅ auto-converts, no map_err needed
+    Ok(file)
+}
 
 /// Run a python script from rust file
 pub fn run_python(script_path: &str) {

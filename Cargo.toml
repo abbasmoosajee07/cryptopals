@@ -5,12 +5,10 @@ edition = "2024"
 default-run = "run_set_01"
 
 [dependencies]
-itertools = "0.14"         # itertools to iterate through large datasets
 hex = "0.4"                # HEX (mainly for checking)
 base64 = "0.22.1"          # Base64 (mainly for checking)
-aes = "0.8.4"              # AES block cipher
-block-modes = "0.9"        # CBC, ECB, etc.
-block-padding = "0.3"      # For PKCS7 padding
+itertools = "0.14"         # itertools to iterate through large datasets
+aes = "0.8.4"
 
 [workspace]
 members = [
@@ -48,3 +46,7 @@ path = "set_01/cryptopals_06.rs"
 [[bin]]
 name = "cryptopals_07"
 path = "set_01/cryptopals_07.rs"
+
+[[bin]]
+name = "cryptopals_08"
+path = "set_01/cryptopals_08.rs"

@@ -4,11 +4,11 @@ Puzzle Link: https://cryptopals.com/sets/1/challenges/1
 Solution by: Abbas Moosajee
 Brief: [Convert Hex to Base64] */
 
-use std::{env, io};
+use std::{env, error::Error};
 use cryptopals::{select_input, hex_to_base64_lib_func, hex_to_bytes, bytes_to_base64};
 // See the relevant functions in: cryptopals\src\basics\hex_base64.rs
 
-fn main() -> io::Result<()> {
+fn main() -> Result<(), Box<dyn Error>> {
     println!("Set 01, Challenge 01: Convert Hex to Base64");
 
     let args: Vec<String> = env::args().collect();
@@ -20,8 +20,8 @@ fn main() -> io::Result<()> {
     // Determine input: argument, file content, or default
     let hex_string: String = select_input(parsed_args, default_hex);
 
-    let raw_bytes: Vec<u8> = hex_to_bytes(&hex_string);
-    let manual_b64: String = bytes_to_base64(&raw_bytes);
+    let raw_bytes: Vec<u8> = hex_to_bytes(&hex_string)?;
+    let manual_b64: String = bytes_to_base64(&raw_bytes)?;
     let lib_b64: String = hex_to_base64_lib_func(&hex_string);
 
     println!("   Bytes(Text): b'{:?}'", String::from_utf8_lossy(&raw_bytes));

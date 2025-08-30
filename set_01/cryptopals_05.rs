@@ -4,11 +4,12 @@ Puzzle Link: https://cryptopals.com/sets/1/challenges/5
 Solution by: Abbas Moosajee
 Brief: [Implement repeating-key XOR] */
 
-use std::{env, io};
+use std::{env, error::Error};
 use cryptopals::{select_input, string_to_bytes, bytes_to_hex, xor_bytes_repeating};
 // See the relevant functions in: cryptopals\src\basics\xor_bytes.rs
 
-fn main() -> io::Result<()> {
+
+fn main() -> Result<(), Box<dyn Error>> {
     println!("Set 01, Challenge 05: Implement repeating-key XOR");
 
     let default_input: &'static str = "Burning 'em, if you ain't quick and nimble\nI go crazy when I hear a cymbal^ICE";

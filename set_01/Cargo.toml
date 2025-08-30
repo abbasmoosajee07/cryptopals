@@ -7,6 +7,7 @@ default-run = "run_set_01"
 [dependencies]
 cryptopals = { path = "../../cryptopals" }
 
+
 [[bin]]
 name = "run_set_01"
 path = "run_set_01.rs"
@@ -38,3 +39,7 @@ path = "cryptopals_06.rs"
 [[bin]]
 name = "cryptopals_07"
 path = "cryptopals_07.rs"
+
+[[bin]]
+name = "cryptopals_08"
+path = "cryptopals_08.rs"
