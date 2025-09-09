@@ -2,18 +2,22 @@
 name = "cryptopals"
 version = "0.1.0"
 edition = "2024"
-default-run = "run_set_01"
+default-run = "run_all"
 
 [dependencies]
 hex = "0.4"                # HEX (mainly for checking)
 base64 = "0.22.1"          # Base64 (mainly for checking)
-itertools = "0.14"         # itertools to iterate through large datasets
+itertools = "0.14.0"       # itertools to iterate through large datasets
 aes = "0.8.4"
 
 [workspace]
 members = [
-    "set_01",
+    "set_01", "set_02"
 ]
+
+[[bin]]
+name = "run_all"
+path = "run_cryptopals.rs"
 
 [[bin]]
 name = "run_set_01"
@@ -50,3 +54,11 @@ path = "set_01/cryptopals_07.rs"
 [[bin]]
 name = "cryptopals_08"
 path = "set_01/cryptopals_08.rs"
+
+[[bin]]
+name = "run_set_02"
+path = "set_02/run_set_02.rs"
+
+[[bin]]
+name = "cryptopals_09"
+path = "set_02/cryptopals_09.rs"

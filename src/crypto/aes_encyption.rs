@@ -346,7 +346,12 @@ impl AesStandard {
     }
 }
 
-
+pub fn pkcs7_padding(bytes: &[u8], block_size: usize) -> Vec<u8> {
+    let pad_len: usize = block_size - (bytes.len() % block_size);
+    let mut out: Vec<u8> = bytes.to_vec();
+    out.extend(std::iter::repeat(pad_len as u8).take(pad_len));
+    out
+}
 
 fn _test_aes() -> Result<(), Box<dyn Error>> {
 
