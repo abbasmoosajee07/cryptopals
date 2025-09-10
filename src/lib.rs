@@ -35,6 +35,6 @@ pub use basics::repeating_key::{
     edit_distance, compute_keysize, transpose_chunks, decipher_xor_key,
 };
 pub use crypto::aes_encyption::{
-    AesStandard, AesError
+    AesStandard, AesError, pkcs7_padding
 };
 

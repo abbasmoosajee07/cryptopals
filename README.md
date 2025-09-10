@@ -10,7 +10,7 @@ This repository is primarily implemented in **Rust**, with supporting utilities 
 ## 📊 Cryptopals Progress by Set
 | Set | Title                         | Challenges | Status    |
 | --- | ----------------------------- | ---------- | --------- |
-| 1   | Basics (XOR, ECB, hex/base64) | 1–8        | ✅ 1 / 8 |
+| 1   | Basics (XOR, ECB, hex/base64) | 1–8        | ✅ 8 / 8 |
 | 2   | Block crypto                  | 9–16       | ⬜ 0 / 8 |
 | 3   | Block & stream crypto         | 17–24      | ⬜ 0 / 8 |
 | 4   | Stream crypto attacks         | 25–32      | ⬜ 0 / 8 |

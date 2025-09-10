@@ -2,15 +2,14 @@ from pathlib import Path
 from challenge_utils import ScriptBuilder
 
 # Constants
-PROBLEM_NO = 1
-CHALLENGE = 1
+PROBLEM_NO = 10
+CHALLENGE = 2
 CHOSEN_LANGUAGE = "rust"
 
 AUTHOR = "Abbas Moosajee"
 
 CONFIG_DICT = {
-    1 : ("set_01", "cryptopals_set_01.json"),
-    # 2 : ("set_02", "cryptopals_set_02.json"),
+    2 : ("set_02", "cryptopals_set_02.json"),
     # 3 : ("set_03", "cryptopals_set_03.json"),
     # 4 : ("set_04", "cryptopals_set_04.json"),
     # 5 : ("set_05", "cryptopals_set_05.json"),
