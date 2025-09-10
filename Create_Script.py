@@ -2,7 +2,7 @@ from pathlib import Path
 from challenge_utils import ScriptBuilder
 
 # Constants
-PROBLEM_NO = 10
+PROBLEM_NO = 9
 CHALLENGE = 2
 CHOSEN_LANGUAGE = "rust"
 
