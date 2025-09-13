@@ -5,6 +5,8 @@ edition = "2024"
 default-run = "run_all"
 
 [dependencies]
+rand = "0.8"               # secure OS RNG (uses getrandom under the hood)
+zeroize = "1.5"            # zero memory on drop (optional, recommended)
 hex = "0.4"                # HEX (mainly for checking)
 base64 = "0.22.1"          # Base64 (mainly for checking)
 itertools = "0.14.0"       # itertools to iterate through large datasets
@@ -66,3 +68,11 @@ path = "set_02/cryptopals_09.rs"
 [[bin]]
 name = "cryptopals_10"
 path = "set_02/cryptopals_10.rs"
+
+[[bin]]
+name = "cryptopals_11"
+path = "set_02/cryptopals_11.rs"
+
+[[bin]]
+name = "cryptopals_12"
+path = "set_02/cryptopals_12.rs"

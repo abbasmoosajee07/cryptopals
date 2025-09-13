@@ -14,6 +14,7 @@ pub mod basics {
 pub mod crypto{
     pub mod aes_constants;
     pub mod aes_encyption;
+    pub mod aes_oracle;
 }
 pub mod utils;
 
@@ -34,7 +35,10 @@ pub use basics::xor_cipher::{test_xor_key, english_frequencies, chi_square};
 pub use basics::repeating_key::{
     edit_distance, compute_keysize, transpose_chunks, decipher_xor_key,
 };
-pub use crypto::aes_encyption::{
-    AesStandard, AesError, pkcs7_padding
-};
 
+pub use crypto::aes_encyption::{
+    AesStandard, AesError, pkcs7_padding, gen_key
+};
+pub use crypto::aes_oracle::{
+    encryption_oracle_random, detect_mode, find_block_size, find_next_byte, confirm_ecb
+};

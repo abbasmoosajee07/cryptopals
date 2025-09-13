@@ -46,6 +46,9 @@ pub fn base64_to_bytes(line: &str) -> Result<Vec<u8>, String> {
     let mut bits_collected = 0;
 
     for c in line.chars() {
+        if c.is_whitespace() {
+            continue; // skip whitespace  ← ADD THIS LINE
+        }
         if c == '=' {
             break; // padding reached
         }
@@ -141,7 +144,6 @@ pub fn hexify(bytes: &[u8]) -> Result<String, String> {
         .collect();
 
     let result = hex_literals.join(", ");
-    println!("{}", result);
     Ok(result)
 }
 

@@ -1,5 +1,5 @@
-use std::fmt;
-use std::error::Error;
+use std::{fmt,error::Error};
+use rand::{rngs::OsRng, RngCore};
 use crate::crypto::aes_constants::{SBOX, R_CONSTANTS, INV_SBOX};
 
 #[derive(Debug)]
@@ -190,7 +190,7 @@ impl AesStandard {
     // ----------------------------
     // AES Block Operations (assumes Nb=4 / 16-byte state)
     // ----------------------------
-    fn encrypt_block(&self, input: &[u8; 16]) -> [u8; 16] {
+    pub fn encrypt_block(&self, input: &[u8; 16]) -> [u8; 16] {
         let mut state = *input;
         // Initial round key (round 0)
         Self::xor_in_place(&mut state, &self.expanded_key[0..16]);
@@ -213,7 +213,7 @@ impl AesStandard {
         state
     }
 
-    fn decrypt_block(&self, input: &[u8; 16]) -> [u8; 16] {
+    pub fn decrypt_block(&self, input: &[u8; 16]) -> [u8; 16] {
         let mut state = *input;
 
         // Initial add round key (last)
@@ -353,7 +353,13 @@ pub fn pkcs7_padding(bytes: &[u8], block_size: usize) -> Vec<u8> {
     out
 }
 
-fn _test_aes() -> Result<(), Box<dyn Error>> {
+pub fn gen_key(len: usize) -> Vec<u8> {
+    let mut key: Vec<u8> = vec![0u8; len];
+    OsRng.fill_bytes(&mut key);
+    key
+}
+
+pub fn _test_aes() -> Result<(), Box<dyn Error>> {
 
     let base_state: [u8; 16] = [
         0x00, 0x11, 0x22, 0x33,
