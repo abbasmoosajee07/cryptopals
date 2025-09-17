@@ -353,6 +353,27 @@ pub fn pkcs7_padding(bytes: &[u8], block_size: usize) -> Vec<u8> {
     out
 }
 
+
+pub fn pkcs7_unpadding(bytes: &[u8]) -> Result<Vec<u8>, &'static str> {
+    if bytes.is_empty() {
+        return Err("Input is empty");
+    }
+
+    let pad_len = *bytes.last().unwrap() as usize;
+
+    if pad_len == 0 || pad_len > bytes.len() {
+        return Err("Invalid padding length");
+    }
+
+    // Check that the last pad_len bytes are all the same value
+    if !bytes[bytes.len() - pad_len..].iter().all(|&b| b as usize == pad_len) {
+        return Err("Invalid padding bytes");
+    }
+
+    Ok(bytes[..bytes.len() - pad_len].to_vec())
+}
+
+
 pub fn gen_key(len: usize) -> Vec<u8> {
     let mut key: Vec<u8> = vec![0u8; len];
     OsRng.fill_bytes(&mut key);
