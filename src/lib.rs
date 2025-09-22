@@ -40,5 +40,6 @@ pub use crypto::aes_encyption::{
     AesStandard, AesError, pkcs7_padding, pkcs7_unpadding, gen_key
 };
 pub use crypto::aes_oracle::{
-    encryption_oracle_random, detect_mode, find_block_size, find_next_byte, confirm_ecb
+    encryption_oracle_random, detect_mode, find_block_size,
+    find_next_byte, confirm_ecb, encryption_oracle, find_prefix_len
 };

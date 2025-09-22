@@ -4,41 +4,10 @@ Puzzle Link: https://cryptopals.com/sets/2/challenges/12
 Solution by: Abbas Moosajee
 Brief: [Byte-at-a-time ECB decryption (Simple)] */
 
-use std::{env, error::Error, cell::RefCell};
+use std::{env, error::Error};
 use cryptopals::{
-    select_input, base64_to_bytes,
-    AesStandard, pkcs7_padding, gen_key, confirm_ecb, find_block_size, find_next_byte
+    select_input, base64_to_bytes, encryption_oracle, confirm_ecb, find_block_size, find_next_byte
 };
-
-thread_local! {
-    static KEY: RefCell<Option<Vec<u8>>> = RefCell::new(None);
-}
-
-/// Encryption oracle: Appends secret suffix and encrypts with ECB
-/// data: User-controlled input bytes
-/// suffix_bytes: Secret bytes to be decrypted
-fn encryption_oracle(data: &[u8], suffix_bytes: Vec<u8>) -> Vec<u8> {
-    KEY.with(|key_cell: &RefCell<Option<Vec<u8>>>| {
-        let mut key_opt: std::cell::RefMut<'_, Option<Vec<u8>>> = key_cell.borrow_mut();
-        
-        // Generate key once and reuse it (thread-local storage)
-        if key_opt.is_none() {
-            *key_opt = Some(gen_key(16));
-        }
-        
-        let key: &Vec<u8> = key_opt.as_ref().unwrap();
-        
-        // Combine user input with secret suffix
-        let mut plaintext: Vec<u8> = Vec::new();
-        plaintext.extend_from_slice(data);
-        plaintext.extend_from_slice(&suffix_bytes);
-        
-        // PKCS#7 pad to block size and encrypt with ECB
-        let padded: Vec<u8> = pkcs7_padding(&plaintext, 16);
-        let cipher: AesStandard = AesStandard::new(key).unwrap();
-        cipher.encrypt_ecb(&padded).unwrap()
-    })
-}
 
 fn main() -> Result<(), Box<dyn Error>> {
     println!("Set 02, Challenge 12: Byte-at-a-time ECB decryption (Simple)");

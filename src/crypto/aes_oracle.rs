@@ -1,7 +1,12 @@
 use rand::{Rng, random};
 use std::collections::HashSet;
 use crate::crypto::aes_encyption::{AesStandard,  gen_key, pkcs7_padding};
+use std::cell::RefCell;
 
+thread_local! {
+    pub static KEY: RefCell<Option<Vec<u8>>> = RefCell::new(None);
+    pub static PREFIX: RefCell<Option<Vec<u8>>> = RefCell::new(None);
+}
 /// Encryption oracle: randomly encrypts with ECB or CBC
 pub fn encryption_oracle_random(data: &[u8]) -> (Vec<u8>, &'static str) {
     let key = gen_key(16);
@@ -44,32 +49,35 @@ pub fn detect_mode(ciphertext: &[u8]) -> &'static str {
     "CBC"
 }
 
-
 /// Confirms ECB mode by testing with repeating input blocks
 /// encryption_fn: The encryption oracle function to test
 /// suffix_bytes: The secret suffix bytes to append
 /// block_size: The detected block size to verify
 pub fn confirm_ecb(
-    encryption_fn: impl Fn(&[u8], Vec<u8>) -> Vec<u8>,
+    oracle: impl Fn(&[u8], Vec<u8>) -> Vec<u8>,
     suffix_bytes: Vec<u8>,
     block_size: usize
 ) -> bool {
-    // Create input with repeating blocks to test ECB behavior
-    let input: Vec<u8> = vec![b'A'; block_size * 3];
-    let ciphertext: Vec<u8> = encryption_fn(&input, suffix_bytes);
+    // Feed in a long string of 'A's (long enough to cover any prefix misalignment)
+    let probe: Vec<u8> = vec![b'A'; block_size * 64];
+    let ct: Vec<u8> = oracle(&probe, suffix_bytes);
 
-    // Check if any two consecutive blocks are identical (ECB characteristic)
-    for i in 0..2 {
-        let block1: &[u8] = &ciphertext[i * block_size..(i + 1) * block_size];
-        let block2: &[u8] = &ciphertext[(i + 1) * block_size..(i + 2) * block_size];
+    let num_blocks: usize = ct.len() / block_size;
+    let mut blocks: Vec<&[u8]> = Vec::with_capacity(num_blocks);
 
-        if block1 == block2 {
+    for i in 0..num_blocks {
+        blocks.push(&ct[i * block_size..(i + 1) * block_size]);
+    }
+
+    // Look for any repeated adjacent block
+    for i in 0..(blocks.len() - 1) {
+        if blocks[i] == blocks[i + 1] {
             return true; // ECB confirmed
         }
     }
+
     panic!("Not using ECB mode!");
 }
-
 
 /// Detects the block size by monitoring ciphertext length changes
 /// encryption_fn: The encryption oracle function
@@ -131,3 +139,73 @@ pub fn find_next_byte(
 
     None // No match found (end of message or error)
 }
+
+/// Encryption oracle: Appends secret suffix and encrypts with ECB
+/// data: User-controlled input bytes
+/// suffix_bytes: Secret bytes to be decrypted
+pub fn encryption_oracle(data: &[u8], suffix_bytes: Vec<u8>) -> Vec<u8> {
+    KEY.with(|key_cell: &RefCell<Option<Vec<u8>>>| {
+        let mut key_opt: std::cell::RefMut<'_, Option<Vec<u8>>> = key_cell.borrow_mut();
+
+        // Generate key once and reuse it (thread-local storage)
+        if key_opt.is_none() {
+            *key_opt = Some(gen_key(16));
+        }
+        let key: &Vec<u8> = key_opt.as_ref().unwrap();
+
+        // Combine user input with secret suffix
+        let mut plaintext: Vec<u8> = Vec::new();
+        plaintext.extend_from_slice(data);
+        plaintext.extend_from_slice(&suffix_bytes);
+
+        // PKCS#7 pad to block size and encrypt with ECB
+        let padded: Vec<u8> = pkcs7_padding(&plaintext, 16);
+        let cipher: AesStandard = AesStandard::new(key).unwrap();
+        cipher.encrypt_ecb(&padded).unwrap()
+    })
+}
+
+
+/// Find prefix length (unknown random bytes before our controllable input)
+/// Strategy:
+/// For pad in 0..block_size:
+///   send input: 'A' * (2*block_size + pad)
+///   find first index i where block i == block i+1
+///   then prefix_len = i*block_size - pad
+pub fn find_prefix_len(
+    oracle: impl Fn(&[u8], Vec<u8>) -> Vec<u8>,
+    suffix_bytes: Vec<u8>,
+    block_size: usize
+) -> usize {
+    // We'll create a buffer of 2*block_size + pad 'A's and search for two identical adjacent blocks.
+    for pad in 0..block_size {
+        let probe: Vec<u8> = vec![b'A'; block_size * 2 + pad];
+        let ct: Vec<u8> = oracle(&probe, suffix_bytes.clone());
+
+        // split into blocks
+        let num_blocks: usize = ct.len() / block_size;
+        let mut blocks: Vec<&[u8]> = Vec::with_capacity(num_blocks);
+        for i in 0..num_blocks {
+            blocks.push(&ct[i*block_size..(i+1)*block_size]);
+        }
+
+        // find adjacent identical blocks
+        for i in 0..(blocks.len().saturating_sub(1)) {
+            if blocks[i] == blocks[i+1] {
+                // found repeated adjacent blocks at index i
+                // prefix length = i*block_size - pad
+                let prefix_len: usize = i * block_size;
+                if prefix_len >= pad {
+                    return prefix_len - pad;
+                } else {
+                    // shouldn't happen, but guard
+                    return 0;
+                }
+            }
+        }
+    }
+
+    // if not found, fallback to 0
+    0
+}
+
