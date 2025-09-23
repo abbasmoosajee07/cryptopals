@@ -14,7 +14,7 @@ aes = "0.8.4"
 
 [workspace]
 members = [
-    "set_01", "set_02"
+    "set_01", "set_02", "set_03"
 ]
 
 [[bin]]
@@ -92,3 +92,11 @@ path = "set_02/cryptopals_15.rs"
 [[bin]]
 name = "cryptopals_16"
 path = "set_02/cryptopals_16.rs"
+
+[[bin]]
+name = "run_set_03"
+path = "set_03/run_set_03.rs"
+
+[[bin]]
+name = "cryptopals_17"
+path = "set_03/cryptopals_17.rs"

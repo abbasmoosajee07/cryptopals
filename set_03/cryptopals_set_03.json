@@ -1,0 +1,11 @@
+{
+    "challenge_id": "Cryptopals_set_03",
+    "text_input": "inputs/challenge_{problem_no:02d}_input",
+    "problem_title": "Challenge",
+    "challenge_folder": "set_03",
+    "problem_folder": "",
+    "solution_file": "cryptopals_{problem_no:02d}.{lang}",
+    "challenge_header": "Cryptopals: Set 3(Block & Stream Crypto)",
+    "plot_color": "#18BC9C",
+    "script_header": "Cryptopals - Set 3, Challenge {problem_no}\nSolution Started: {month} {current_time.tm_mday}, {current_time.tm_year}\nPuzzle Link: https://cryptopals.com/sets/3/challenges/{problem_no}\nSolution by: {author}\nBrief: [Code/Problem Description]"
+}
